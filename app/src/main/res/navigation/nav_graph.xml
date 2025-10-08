@@ -7,7 +7,16 @@
 
     <fragment
         android:id="@+id/authFragment"
-        android:name="com.example.presentation.ui.screens.AuthFragment"
-        />
+        android:name="com.example.presentation.ui.screens.AuthFragment">
+        <action
+            android:id="@+id/action_authFragment_to_mainFragment"
+            app:destination="@+id/mainFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.presentation.ui.screens.MainFragment">
+
+    </fragment>
 
 </navigation>

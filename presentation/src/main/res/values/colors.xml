@@ -2,4 +2,18 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="main_bg_color">#FF151515</color>
+    <color name="white_text_color">#70F2F2F3</color>
+    <color name="green_text_and_button_color">#FF12B956</color>
+    <color name="vk_color">#FF2683ED</color>
+
+    <color name="ok_gradient_first_color">#FFF98509</color>
+    <color name="ok_gradient_second_color">#FFF95D00</color>
+
+    <color name="text_field_color">#FF32333A</color>
+    <color name="divider_color">#FF4D555E</color>
+    <color name="row_item_box_color">#4C32333A</color>
+    <color name="blur_color">#FF32333A</color>
+    <color name="indicator_nav_bar_color">#FF32333A</color>
+    <color name="course_card_color">#FF24252A</color>
 </resources>

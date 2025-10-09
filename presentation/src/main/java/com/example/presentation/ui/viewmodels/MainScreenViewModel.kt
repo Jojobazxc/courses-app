@@ -56,6 +56,12 @@ class MainScreenViewModel @Inject constructor(
         }
     }
 
+    fun sortCoursesByData() {
+        _courses.value = _courses.value.sortedByDescending {
+            parseDate(it.publishDate)
+        }
+    }
+
     private fun parseDate(date: String): LocalDate {
         val inputFormat = DateTimeFormatter.ofPattern("yyyy-DD-mm")
         return LocalDate.parse(date, inputFormat)
@@ -81,7 +87,8 @@ class MainScreenViewModel @Inject constructor(
                 price = it.price,
                 rating = it.rating,
                 startDate = it.startDate,
-                isLiked = it.isLiked
+                isLiked = it.isLiked,
+                publishDate = it.publishDate
             )
         }
 

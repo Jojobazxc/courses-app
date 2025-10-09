@@ -62,6 +62,13 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             }
         }
 
+        binding.sortText.setOnClickListener {
+            vm.sortCoursesByData()
+            binding.recyclerView.postDelayed({
+                binding.recyclerView.scrollToPosition(0)
+            }, 30)
+        }
+
 
     }
 

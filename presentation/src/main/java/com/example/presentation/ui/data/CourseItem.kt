@@ -7,5 +7,6 @@ data class CourseItem(
     val price: String,
     val rating: String,
     var startDate: String,
+    val publishDate: String,
     val isLiked: Boolean,
 )

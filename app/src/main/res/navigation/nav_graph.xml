@@ -2,21 +2,23 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/authFragment"
-    >
+    app:startDestination="@id/authFragment">
 
     <fragment
         android:id="@+id/authFragment"
-        android:name="com.example.presentation.ui.screens.AuthFragment">
-        <action
-            android:id="@+id/action_authFragment_to_mainFragment"
-            app:destination="@+id/mainFragment"/>
-    </fragment>
+        android:name="com.example.presentation.ui.screens.AuthFragment" />
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.presentation.ui.screens.MainFragment">
+        android:name="com.example.presentation.ui.screens.MainFragment" />
 
-    </fragment>
+    <fragment
+        android:id="@+id/favouritesFragment"
+        android:name="com.example.presentation.ui.screens.FavouritesFragment"/>
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.presentation.ui.screens.ProfileFragment"/>
+
 
 </navigation>

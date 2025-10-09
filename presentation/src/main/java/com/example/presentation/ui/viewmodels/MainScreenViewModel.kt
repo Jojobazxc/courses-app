@@ -48,6 +48,14 @@ class MainScreenViewModel @Inject constructor(
         }
     }
 
+    fun addFavourites(id: Int, isLiked: Boolean) {
+        if (_courses.value.isNotEmpty()) {
+            _courses.value = _courses.value.map {
+                if (it.id == id) it.copy(isLiked = isLiked) else it
+            }
+        }
+    }
+
     private fun parseDate(date: String): LocalDate {
         val inputFormat = DateTimeFormatter.ofPattern("yyyy-DD-mm")
         return LocalDate.parse(date, inputFormat)

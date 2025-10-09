@@ -4,9 +4,11 @@ import androidx.recyclerview.widget.DiffUtil
 import com.example.presentation.ui.data.CourseItem
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 
-class CoursesAdapter : AsyncListDifferDelegationAdapter<CourseItem>(DIFF) {
+class CoursesAdapter (
+    onLikeClick: (Int, Boolean) -> Unit
+) : AsyncListDifferDelegationAdapter<CourseItem>(DIFF) {
     init {
-        delegatesManager.addDelegate(courseAdapterDelegate())
+        delegatesManager.addDelegate(courseAdapterDelegate(onLikeClick))
     }
     companion object {
         val DIFF = object : DiffUtil.ItemCallback<CourseItem>() {

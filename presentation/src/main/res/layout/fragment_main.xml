@@ -26,6 +26,7 @@
             android:layout_height="20dp"
             android:layout_gravity="center_vertical|end"
             android:drawableEnd="@drawable/ic_sort"
+            android:layout_marginBottom="8dp"
             android:drawablePadding="4dp"
             android:textColor="@color/green_text_and_button_color"
             android:fontFamily="@font/roboto_medium"
@@ -43,7 +44,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:clipToPadding="false"
         android:paddingBottom="8dp"
-        android:paddingTop="8dp"
         tools:listitem="@layout/main_view_course_item"
         />
 

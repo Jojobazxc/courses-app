@@ -25,13 +25,17 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     private val vm: MainScreenViewModel by viewModels()
 
-    private val adapter = CoursesAdapter()
+    private val adapter = CoursesAdapter(
+        onLikeClick = { id, isLiked ->
+            //реализация добавления в БД через vm //
+            vm.addFavourites(id, isLiked)
+        }
+    )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val initialLeft = view.paddingLeft
         val initialTop = view.paddingTop
         val initialRight = view.paddingRight
-        val initialBottom = view.paddingBottom
 
         ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
             val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -39,14 +43,16 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 left = initialLeft,
                 right = initialRight,
                 top = initialTop + bars.top,
-                bottom = initialBottom + bars.bottom
             )
             insets
         }
+
         _binding = FragmentMainBinding.bind(view)
         binding.recyclerView.layoutManager =
             androidx.recyclerview.widget.LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
+
+        binding.recyclerView.clipToPadding = false
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -55,6 +61,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 }
             }
         }
+
 
     }
 

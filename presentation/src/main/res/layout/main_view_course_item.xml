@@ -47,7 +47,7 @@
 
                 <ImageView
                     android:id="@+id/favouriteIcon"
-                    android:layout_width="10dp"
+                    android:layout_width="11dp"
                     android:layout_height="13dp"
                     android:layout_gravity="center"
                     android:background="@drawable/ic_liked_course"

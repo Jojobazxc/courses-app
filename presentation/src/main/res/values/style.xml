@@ -4,4 +4,7 @@
         <item name="elevation">0dp</item>
         <item name="rippleColor">@android:color/transparent</item>
     </style>
+    <style name="App.BottomNav.ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/indicator_nav_bar_color</item>
+    </style>
 </resources>

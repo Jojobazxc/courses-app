@@ -3,9 +3,13 @@ package com.example.presentation.ui.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.models.CourseModel
 import com.example.domain.models.CoursesModel
+import com.example.domain.useCase.AddCourseToFavouriteUseCase
+import com.example.domain.useCase.DeleteCourseFromFavouriteUseCase
 import com.example.domain.useCase.GetCoursesUseCase
 import com.example.presentation.ui.data.CourseItem
+import com.example.presentation.ui.data.toDomainModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,16 +24,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(
-    private val getCoursesUseCase: GetCoursesUseCase
+    private val getCoursesUseCase: GetCoursesUseCase,
+    private val addCourseToFavouriteUseCase: AddCourseToFavouriteUseCase,
+    private val deleteCourseFromFavouriteUseCase: DeleteCourseFromFavouriteUseCase,
 ) : ViewModel() {
 
-    init {
-        getCourses()
-        Log.d("VM Request", "Complete")
-    }
 
     private val _courses = MutableStateFlow<List<CourseItem>>(emptyList())
     var courses = _courses.asStateFlow()
+
+    init {
+        getCourses()
+    }
 
     private fun getCourses() {
         viewModelScope.launch(Dispatchers.Main) {
@@ -42,8 +48,18 @@ class MainScreenViewModel @Inject constructor(
                     it.copy(startDate = formatData(it.startDate), price = "${it.price} ₽")
                 }
                 Log.d("UI Data", "${_courses.value}")
+                addInitialFavouritesIfNeeded()
             }.onFailure { exception ->
                 _courses.value = emptyList()
+            }
+        }
+    }
+
+    private fun addInitialFavouritesIfNeeded() {
+        val initialFavourites = _courses.value.filter { it.isLiked }
+        viewModelScope.launch(Dispatchers.IO) {
+            initialFavourites.forEach {
+                addCourseToFavouriteUseCase(it.toDomainModel())
             }
         }
     }
@@ -53,7 +69,28 @@ class MainScreenViewModel @Inject constructor(
             _courses.value = _courses.value.map {
                 if (it.id == id) it.copy(isLiked = isLiked) else it
             }
+            val course = _courses.value.find { it.id == id }
+
+            if (course != null) {
+                viewModelScope.launch {
+                    withContext(Dispatchers.IO) {
+                        if (!isLiked) {
+                            deleteCourseFromFavouriteUseCase(
+                                course.toDomainModel()
+                            )
+                            Log.e("Room", "Удаление")
+                        } else {
+                            addCourseToFavouriteUseCase(
+                                course.toDomainModel()
+                            )
+                            Log.e("Room", "Добавлен курс в избранное")
+                        }
+                    }
+                }
+            }
+
         }
+
     }
 
     fun sortCoursesByData() {
